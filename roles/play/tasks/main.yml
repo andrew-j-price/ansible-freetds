@@ -1,0 +1,25 @@
+---
+
+- name: install packages on RHEL based OS
+  yum: name={{ item }} state=present #update_cache=yes
+  with_items:
+    - freetds
+    - freetds-devel
+  when: ansible_os_family =='RedHat'
+
+- name: install packages on Debian based OS
+  apt: name={{ item }} state=present #update_cache=yes
+  with_items:
+    - freetds-bin
+    - freetds-dev
+  when: ansible_os_family =='Debian'
+
+- name: Copy t-sql commands to run
+  template:
+    src: commandFile.j2
+    dest: "{{ commandFile }}"
+    mode: 0644
+    backup: yes
+
+- name: Run t-sql commands
+  shell: tsql -H {{ host }} -p {{ port }} -U {{ user }} -P {{ password }} -D {{ database }} < {{ commandFile }}

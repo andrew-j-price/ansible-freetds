@@ -1,0 +1,9 @@
+---
+
+host: 192.168.56.15
+port: 1433
+user: sa
+password: 'Password123'
+database: master
+commandFile: /tmp/t-sql-commands
+backupDirectory: D:\MSSQL11.MSSQLSERVER\MSSQL\Backup

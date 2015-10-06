@@ -1,0 +1,12 @@
+--SHOW DATABASES;
+SELECT name, database_id FROM sys.databases
+GO
+
+EXECUTE dbo.DatabaseBackup
+@Databases = '{{ database }}',
+@Directory = '{{ backupDirectory }}',
+@BackupType = 'FULL',
+@Verify = 'Y',
+@Compress = 'Y',
+@CleanupTime = 336  --14 days
+GO
