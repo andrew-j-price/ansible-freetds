@@ -1,12 +1,13 @@
---SHOW DATABASES;
-SELECT name, database_id FROM sys.databases
-GO
+DECLARE	@return_value int
 
-EXECUTE dbo.DatabaseBackup
+EXECUTE @return_value = dbo.DatabaseBackup
 @Databases = '{{ database }}',
 @Directory = '{{ backupDirectory }}',
 @BackupType = 'FULL',
 @Verify = 'Y',
 @Compress = 'Y',
 @CleanupTime = 336  --14 days
+
+SELECT	'Return Value' = @return_value
+
 GO

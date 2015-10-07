@@ -23,3 +23,8 @@
 
 - name: Run t-sql commands
   shell: tsql -H {{ host }} -p {{ port }} -U {{ user }} -P {{ password }} -D {{ database }} < {{ commandFile }}
+  register: commandResult
+  failed_when: "'(return status = 0)' not in commandResult.stdout"
+
+- name: Debug t-sql output
+  debug: var=commandResult
